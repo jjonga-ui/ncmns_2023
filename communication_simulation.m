@@ -1,3 +1,10 @@
+close all
+clc
+
+
+%--------------------------------------------------------------------------
+
+
 % Define time vector
 % parameters
 ts = 0.01;                  % increment 1/100 second
@@ -51,14 +58,13 @@ h_f = fft(h_t);                             % to frequency domain
 %fs = 1/ts;
 %f = (0:length(h_f)-1)*fs/length(h_f);
 
-h_f_inv = 1 ./ h_f;                         % inverse in frequency domain
+h_f_inv = conj(h_f);                        % inverse in frequency domain
 h_t_inv = ifft(h_f_inv);                    % back to time domain 
 
 
 
 % Convolve output with inverse impulse response
-z_t = conv(y_t,h_t_inv);    % equalized signal 
-z_t = z_t(1:1000);        
+z_t = conv(y_t,h_t_inv);    % equalized signal         
 
 
 %--------------------------------------------------------------------------
@@ -97,13 +103,25 @@ title('Channel Inverse Impulse Response');
 
 % z_t (equalized signal)
 subplot(5,1,5);
-plot(t,z_t);
+plot(z_t);
 xlabel('Time');
 ylabel('Amplitude');
 title('Equalized Signal');
 
 
 %--------------------------------------------------------------------------
+
+your_mom = conv(h_t,h_t_inv);
+
+figure;
+plot(your_mom);
+xlabel('Time');
+ylabel('Amplitude');
+title('Your Mom');
+
+
+%--------------------------------------------------------------------------
+
 
 
 %Plot the frequency response of the channel
