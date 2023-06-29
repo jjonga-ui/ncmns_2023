@@ -1,7 +1,6 @@
 close all
 clc
 
-
 %--------------------------------------------------------------------------
 
 
@@ -33,7 +32,8 @@ end
 
 
 % Define the channel impulse response
-h_t = exp(-0.2*t); % e^-0.2 , e^-0.4 , ...
+% h_t = exp(-0.2*t); % e^-0.2 , e^-0.4 , ...
+h_t = cos(2*pi * t + pi/2);
 
 
 %--------------------------------------------------------------------------
@@ -55,16 +55,14 @@ t_output = 0:ts:total_duration*2-ts-ts;
 
 % https://www.mathworks.com/help/matlab/math/fourier-transforms.html 
 h_f = fft(h_t);                             % to frequency domain  
-%fs = 1/ts;
-%f = (0:length(h_f)-1)*fs/length(h_f);
 
-h_f_inv = conj(h_f);                        % inverse in frequency domain
-h_t_inv = ifft(h_f_inv);                    % back to time domain 
-
+h_f_inv = 1 ./ h_f;                        % inverse in frequency domain
+h_t_inv = ifft(h_f_inv);                   % back to time domain 
 
 
 % Convolve output with inverse impulse response
-z_t = conv(y_t,h_t_inv);    % equalized signal         
+z_t = conv(y_t,h_t_inv);    % equalized signal  
+z_t = z_t(1:1000);
 
 
 %--------------------------------------------------------------------------
@@ -96,14 +94,14 @@ title('Output Signal');
 
 % h_t_inv
 subplot(5,1,4);
-plot(h_t_inv);
+plot(t,h_t_inv);
 xlabel('Time');
 ylabel('Amplitude');
 title('Channel Inverse Impulse Response');
 
 % z_t (equalized signal)
 subplot(5,1,5);
-plot(z_t);
+plot(t,z_t);
 xlabel('Time');
 ylabel('Amplitude');
 title('Equalized Signal');
@@ -111,7 +109,7 @@ title('Equalized Signal');
 
 %--------------------------------------------------------------------------
 
-your_mom = conv(h_t,h_t_inv);
+your_mom = h_f .* h_f_inv;
 
 figure;
 plot(your_mom);
