@@ -16,11 +16,26 @@ t = 0:ts:total_duration-ts;
 
 % Define the input signal
 
-% create trail of rectangular pulses
-pulse_width = 0.1;      % width of each rectangular pulse
-pulse_interval = 1;     % interval between pulse
+x_t = zeros(size(t));       % initialize to vector of zeros 
+pulse_width = 0.5;          % width of each rectangular pulse
+pulse_interval = 1;         % interval between pulse
+
+
+% Example: 1 boxcar 
+% for n = 0:pulse_interval:0    
+%     x_t = x_t + rectpuls(t-n-(pulse_width/2), pulse_width);
+% end
+
+
+% Example: 2 boxcars
+% for n = 0:pulse_interval:1    
+%     x_t = x_t + rectpuls(t-n-(pulse_width/2), pulse_width);
+% end
+
+
+% Example: 10 boxcars 
 for n = 0:pulse_interval:total_duration     
-    x_t = x_t + rectpuls(t-n, pulse_width);
+    x_t = x_t + rectpuls(t-n-(pulse_width/2), pulse_width);
 end
 
 
@@ -29,11 +44,17 @@ end
 
 % Define the channel impulse response
 
+
+% Example: decreasing exponential 
 h_t = exp(-0.2*t); % e^-0.2 , e^-0.4 , ...
 
-%h_t = cos(2*pi * t + pi/2);
 
-%h_t = x_t;
+% Example: cosine 
+% h_t = cos(2*pi * t + pi/2);
+
+
+% Example: boxcars
+% h_t = x_t;
 
 
 %--------------------------------------------------------------------------
@@ -42,10 +63,12 @@ h_t = exp(-0.2*t); % e^-0.2 , e^-0.4 , ...
 % Convolve the input with the channel impulse response
 y_t = conv(x_t, h_t);
 
-% create new time axis for output
-t_output = 0:ts:total_duration*2-ts-ts;
+y_t = y_t*0.01;                         % appropriately scale y-axis*
+t_output = 0:ts:total_duration*2-ts-ts; % create new time axis for output
 
 
+
+% *Note: y_t output is based on original x_t and h_t x-axis units
 %--------------------------------------------------------------------------
 
 
@@ -62,7 +85,7 @@ h_t_inv = ifft(h_f_inv);                    % back to time domain
 % Convolve output with inverse impulse response
 z_t = conv(y_t,h_t_inv);    % equalized signal  
 
-z_t = z_t(1:1000);          % fix scaling 
+z_t = z_t(1:1000);          % cut to size  
 
 
 %--------------------------------------------------------------------------
@@ -73,7 +96,7 @@ figure('Position', [100, 100, 800, 600]);
 
 % x_t
 subplot(5,1,1);
-plot(t, x_t);
+plot(t,x_t);
 xlabel('Time');
 ylabel('Amplitude');
 title('Input Signal');
@@ -108,5 +131,3 @@ title('Equalized Signal');
 
 
 %--------------------------------------------------------------------------
-
-% plot h_t * h_t_inv
