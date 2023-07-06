@@ -5,25 +5,21 @@ clc
 
 
 % Define time vector
-% parameters
+
 ts = 0.01;                  % increment 1/100 second
 total_duration = 10;        % for 10 seconds 
-
-t = 0:ts:total_duration-ts;     % time vector
+t = 0:ts:total_duration-ts;    
 
 
 %--------------------------------------------------------------------------
 
 
 % Define the input signal
-% parameters 
-pulse_width = 0.5;      % width of each rectangular pulse
-pulse_interval = 1;     % interval between pulses
-
-x_t = zeros(size(t));       % initialize input signal 
 
 % create trail of rectangular pulses
-for n = 0:pulse_interval:total_duration      
+pulse_width = 0.1;      % width of each rectangular pulse
+pulse_interval = 1;     % interval between pulse
+for n = 0:pulse_interval:total_duration     
     x_t = x_t + rectpuls(t-n, pulse_width);
 end
 
@@ -32,8 +28,12 @@ end
 
 
 % Define the channel impulse response
-h_t = exp(-0.002*t); % e^-0.2 , e^-0.4 , ...
-% h_t = cos(2*pi * t + pi/2);
+
+h_t = exp(-0.2*t); % e^-0.2 , e^-0.4 , ...
+
+%h_t = cos(2*pi * t + pi/2);
+
+%h_t = x_t;
 
 
 %--------------------------------------------------------------------------
@@ -49,25 +49,20 @@ t_output = 0:ts:total_duration*2-ts-ts;
 %--------------------------------------------------------------------------
 
 
-% Equalization
-
-% Define inverse impulse response 
-
+% Equalization: define inverse impulse response 
 % https://www.mathworks.com/help/matlab/math/fourier-transforms.html 
+
 h_f = fft(h_t);                             % to frequency domain  
 
-
 h_f_inv = 1 ./ h_f;                         % inverse in frequency domain
-% h_f_inv = conj(h_f);                       
-% h_f_inv = h_f_inv ./ abs(h_f).^2;
-
 
 h_t_inv = ifft(h_f_inv);                    % back to time domain 
 
 
 % Convolve output with inverse impulse response
 z_t = conv(y_t,h_t_inv);    % equalized signal  
-z_t = z_t(1:1000);
+
+z_t = z_t(1:1000);          % fix scaling 
 
 
 %--------------------------------------------------------------------------
@@ -114,22 +109,4 @@ title('Equalized Signal');
 
 %--------------------------------------------------------------------------
 
-impulse = h_f .* h_f_inv;
-
-figure;
-plot(your_mom);
-xlabel('Time');
-ylabel('Amplitude');
-title('Impulse');
-
-
-%--------------------------------------------------------------------------
-
-
-
-%Plot the frequency response of the channel
-%figure;
-%freqz(h_t);
-%xlabel('Frequency');
-%ylabel('Magnitude');
-%title('Channel Frequency Response');
+% plot h_t * h_t_inv
