@@ -34,9 +34,9 @@ pulse_interval = 1;         % interval between pulse
 
 
 % Example: 10 boxcars 
-% for n = 0:pulse_interval:total_duration     
-%     x_t = x_t + rectpuls(t-n-(pulse_width/2), pulse_width);
-% end
+for n = 0:pulse_interval:total_duration     
+    x_t = x_t + rectpuls(t-n-(pulse_width/2), pulse_width);
+end
 
 
 %--------------------------------------------------------------------------
@@ -46,7 +46,7 @@ pulse_interval = 1;         % interval between pulse
 
 
 % Example: decreasing exponential 
-h_t = exp(-0.2*t); % e^-0.2 , e^-0.4 , ...
+% h_t = exp(-0.2*t); % e^-0.2 , e^-0.4 , ...
 
 
 % Example: cosine 
@@ -54,7 +54,7 @@ h_t = exp(-0.2*t); % e^-0.2 , e^-0.4 , ...
 
 
 % Example: boxcars
-% h_t = x_t;
+h_t = x_t;
 
 
 %--------------------------------------------------------------------------
@@ -74,11 +74,11 @@ y_time = 0.01*(1:length(y_t));           % create new time vector
 % Equalization: define inverse impulse response 
 % https://www.mathworks.com/help/matlab/math/fourier-transforms.html 
 
-h_f = fft(h_t);                             % to frequency domain  
+% h_f = fft(h_t);                             % to frequency domain  
 
 % h_f_inv = 1 ./ h_f;                         % inverse in frequency domain
 
-h_t_inv = ifft(h_f_inv);                    % back to time domain 
+h_t_inv = ifft(h_f);                    % back to time domain 
 
 
 % Convolve output with inverse impulse response
