@@ -34,9 +34,9 @@ pulse_interval = 1;         % interval between pulse
 
 
 % Example: 10 boxcars 
-for n = 0:pulse_interval:total_duration     
-    x_t = x_t + rectpuls(t-n-(pulse_width/2), pulse_width);
-end
+% for n = 0:pulse_interval:total_duration     
+%     x_t = x_t + rectpuls(t-n-(pulse_width/2), pulse_width);
+% end
 
 
 %--------------------------------------------------------------------------
@@ -61,10 +61,9 @@ h_t = exp(-0.2*t); % e^-0.2 , e^-0.4 , ...
 
 
 % Convolve the input with the channel impulse response
-y_t = conv(x_t, h_t);
+y_t = 0.01*conv(x_t, h_t);               % appropriately scale y-axis*
 
-y_t = y_t*0.01;                         % appropriately scale y-axis*
-t_output = 0:ts:total_duration*2-ts-ts; % create new time axis for output
+y_time = 0.01*(1:length(y_t));           % create new time vector
 
 
 
@@ -77,15 +76,15 @@ t_output = 0:ts:total_duration*2-ts-ts; % create new time axis for output
 
 h_f = fft(h_t);                             % to frequency domain  
 
-h_f_inv = 1 ./ h_f;                         % inverse in frequency domain
+% h_f_inv = 1 ./ h_f;                         % inverse in frequency domain
 
 h_t_inv = ifft(h_f_inv);                    % back to time domain 
 
 
 % Convolve output with inverse impulse response
-z_t = conv(y_t,h_t_inv);    % equalized signal  
+z_t = 100*conv(y_t,h_t_inv);                % equalized signal  
+z_time = 0.01*(1:length(z_t));              % create new time vector
 
-z_t = z_t(1:1000);          % cut to size  
 
 
 %--------------------------------------------------------------------------
@@ -110,7 +109,7 @@ title('Channel Impulse Response');
 
 % y_t
 subplot(5,1,3);
-plot(t_output,y_t);
+plot(y_time,y_t);
 xlabel('Time');
 ylabel('Amplitude');
 title('Output Signal');
@@ -124,7 +123,7 @@ title('Channel Inverse Impulse Response');
 
 % z_t (equalized signal)
 subplot(5,1,5);
-plot(t,z_t);
+plot(z_time,z_t);
 xlabel('Time');
 ylabel('Amplitude');
 title('Equalized Signal');
