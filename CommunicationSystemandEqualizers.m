@@ -23,6 +23,7 @@ close all
 % u(t+2.5) - u(t+2) + u(t+1) - u(t)
 %u = heaviside(t+5.5) - heaviside(t+4) + heaviside(t+3);
 
+%------------------------------------------------------------%
 
 t = -20:0.01:20;    %Adjusted increment to 0.01
 u = heaviside(t+5.5);
@@ -58,14 +59,20 @@ plot(t, u)
 xlabel('Time(s)')
 title('10 Cycles of Unit Step')
 
+%------------------------------------------------------------%
+
 % Impulse Response
-h_n = exp(-2*(0:0.01:1))';  %Adjusted increment to 0.01
+h_n = exp(-0.2*(0:0.01:1))';  %Adjusted increment to 0.01
+
+%h_n = u;
+
 subplot(4,1,2)
 plot(h_n)
 xlabel('Time(s)')
 title('Impulse Response')
 
-convolution = 0.1*conv(u,h_n, 'same');
+
+convolution = 0.1*conv(u,h_n, 'same'); %edited
 convX = 0.1*(1:length(convolution));
 
 % Adjusting time
@@ -76,20 +83,35 @@ plot(convX,convolution)
 xlabel('Time(s)')
 title('Output')
 
+%------------------------------------------------------------%
+
 % Frequence Response
-channel_freq_response = fftshift(fft(h_n));
+channel_freq_response = fft(h_n);
+
+%one = ifft(h_n);
 
 % Inverse of FR
 channel_inverse = 1 ./ channel_freq_response;
+%channel_inverse = ifft(channel_freq_response);
+%channel_inverse = finverse(channel_freq_response);
+
+
+% Putting back into time domain
+ctime = ifft(channel_inverse);
 
 % Linear Equalization
-equalized_signal_linear = 0.1*conv(convolution, channel_inverse, 'same');
+equalized_signal_linear = 0.1*conv(convolution, ctime, 'same');
 equalX = 0.1*(1:length(equalized_signal_linear));
 
 subplot(4,1,4)
 plot(equalX, equalized_signal_linear)
 xlabel('Time(s)')
 title('Linearly Equalized Output')
+
+
+% figure(2)
+% plot(channel_inverse);
+%------------------------------------------------------------%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -104,6 +126,7 @@ title('Linearly Equalized Output')
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 
 
