@@ -30,7 +30,13 @@ y = conv(x,h);
 % research more 
 % https://www.mathworks.com/help/comm/ref/comm.decisionfeedbackequalizer-system-object.html#mw_ee65a6e9-38d3-4fea-b902-ba1250b24985
 
-dfeq = comm.DecisionFeedbackEqualizer;
+dfeq = comm.DecisionFeedbackEqualizer( ...
+    'Algorithm','LMS', ...
+    'NumForwardTaps',4, ...
+    'NumFeedbackTaps',3, ...
+    'StepSize',0.01);
+
+%dfeq_lms.ReferenceTap = 3;
 
 z = dfeq(y,x(1:numTrainingSymbols)); 
 
