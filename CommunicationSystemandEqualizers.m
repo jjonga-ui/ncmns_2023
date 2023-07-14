@@ -62,7 +62,7 @@ title('10 Cycles of Unit Step')
 %------------------------------------------------------------%
 
 % Impulse Response
-h_n = exp(-0.2*(0:0.01:1))';  %Adjusted increment to 0.01
+h_n = exp(-2*(0:0.01:1))';  %Adjusted increment to 0.01
 
 %h_n = u;
 
@@ -86,7 +86,7 @@ title('Output')
 %------------------------------------------------------------%
 
 % Frequence Response
-channel_freq_response = fft(h_n);
+channel_freq_response = fftshift(fft(h_n));
 
 %one = ifft(h_n);
 
@@ -100,7 +100,7 @@ channel_inverse = 1 ./ channel_freq_response;
 ctime = ifft(channel_inverse);
 
 % Linear Equalization
-equalized_signal_linear = 0.1*conv(convolution, ctime, 'same');
+equalized_signal_linear = 0.1*conv(convolution, channel_inverse, 'same');
 equalX = 0.1*(1:length(equalized_signal_linear));
 
 subplot(4,1,4)
