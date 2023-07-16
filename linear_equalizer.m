@@ -17,31 +17,20 @@ M = 2;  % BPSK
 data = randi([0 1],numSymbols,1);
 x = pskmod(data,M);
 
+% Simple Examples 
 % h = 1;
 % h = [0.02+0.5i 0.05];
 
+% Ideal Example
 t_h = (0:ts:length(x)*ts)';
 h = exp(-0.2*t_h);
+h = h(1:2);
 
-test = h(1:2);
-
-y = conv(x,test);
-% rxSig = awgn(rxSig,30);
-
-
-
-% bpsk = comm.BPSKModulator;
-% 
-% x = bpsk(randi([0 1],numSymbols,1));
-% 
-% t_h = (0:ts:length(x)*ts)';
-% h = exp(-0.2*t_h);
-% 
-% y = conv(x,h);
+y = conv(x,h);
+% rxSig = awgn(rxSig,30)
 
 
 %-------------------------------------------------------------------------%
-
 
 % Equalization
 % research more 
@@ -52,7 +41,7 @@ lineq = comm.LinearEqualizer( ...
     Constellation=complex([-1 1]), ...
     ReferenceTap=4);
 
-z = lineq(y,x(1:numTrainingSymbols)); 
+[z,err] = lineq(y,x(1:numTrainingSymbols)); 
 
 
 %-------------------------------------------------------------------------%
@@ -68,8 +57,8 @@ constdiag = comm.ConstellationDiagram( ...
 
 constdiag(y(numSymbols/2:end),z(numSymbols/2:end));
 
-%-------------------------------------------------------------------------%
 
+%-------------------------------------------------------------------------%
 
 % Continuous-Time Plotting
 figure('Position', [100, 100, 800, 600]);
@@ -102,6 +91,17 @@ ylim([-5 5]);
 xlabel('Time');
 ylabel('Amplitude');
 title('Input Signal');
+
+
+%-------------------------------------------------------------------------%
+
+% Plotting error
+
+figure
+plot(abs(err))
+title('Error Estimate')
+xlabel('Bits')
+ylabel('Amplitude (V)')
 
 
 %-------------------------------------------------------------------------%
