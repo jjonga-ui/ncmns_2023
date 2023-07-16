@@ -5,22 +5,39 @@ clc
 
 % Parameters 
 ts = 0.01;
-numSymbols = 100;
-numTrainingSymbols = 20;
+numSymbols = 1000;
+numTrainingSymbols = 200;
 
 
 %-------------------------------------------------------------------------%
 
 % Modulation 
 
-bpsk = comm.BPSKModulator;
+M = 2;  % BPSK
+data = randi([0 1],numSymbols,1);
+x = pskmod(data,M);
 
-x = bpsk(randi([0 1],numSymbols,1));
+% h = 1;
+% h = [0.02+0.5i 0.05];
 
 t_h = (0:ts:length(x)*ts)';
 h = exp(-0.2*t_h);
 
-y = conv(x,h);
+test = h(1:2);
+
+y = conv(x,test);
+% rxSig = awgn(rxSig,30);
+
+
+
+% bpsk = comm.BPSKModulator;
+% 
+% x = bpsk(randi([0 1],numSymbols,1));
+% 
+% t_h = (0:ts:length(x)*ts)';
+% h = exp(-0.2*t_h);
+% 
+% y = conv(x,h);
 
 
 %-------------------------------------------------------------------------%
@@ -30,11 +47,10 @@ y = conv(x,h);
 % research more 
 
 lineq = comm.LinearEqualizer( ...
-    'Algorithm','LMS', ...
-    NumTaps=5, ...
-    StepSize=0.0001, ...
+    NumTaps=8, ...
+    StepSize=0.1, ...
     Constellation=complex([-1 1]), ...
-    ReferenceTap=3);
+    ReferenceTap=4);
 
 z = lineq(y,x(1:numTrainingSymbols)); 
 
@@ -48,10 +64,9 @@ z = lineq(y,x(1:numTrainingSymbols));
 constdiag = comm.ConstellationDiagram( ...
     NumInputPorts=2, ...
     ChannelNames={'Before equalization','After equalization'}, ...
-    ReferenceConstellation=bpsk([0; 1]));
+    ReferenceConstellation=pskmod([0 M-1],M));
 
-constdiag(y,z)
-
+constdiag(y(numSymbols/2:end),z(numSymbols/2:end));
 
 %-------------------------------------------------------------------------%
 
