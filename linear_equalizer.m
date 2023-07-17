@@ -12,23 +12,17 @@ numTrainingSymbols = 200;
 %-------------------------------------------------------------------------%
 
 % Modulation 
-
 M = 2;  % BPSK
 data = randi([0 1],numSymbols,1);
+
+% Input Signal 
 x = pskmod(data,M);
 
-% Simple Examples 
-% h = 1;
-% h = [0.02+0.5i 0.05];
-% h = [1 0.998];            % doesn't work 
-h = [1 0.5 0.25];           % Short Decreasing Exponential Channel
+% Short Decreasing Exponential Channel 
+h = [1 0.5 0.25];           
 
-% Long Decreasing Exponential Channel 
-% t_h = (0:ts:length(x)*ts)';
-% h = exp(-0.2*t_h);
-
+% Output Signal 
 y = conv(x,h);
-% rxSig = awgn(rxSig,30)
 
 
 %-------------------------------------------------------------------------%
@@ -42,7 +36,6 @@ lineq = comm.LinearEqualizer( ...
     ReferenceTap=4);
 
 [z,err] = lineq(y,x(1:numTrainingSymbols)); % LMS
-% [z,err] = lineq(y); % CMA
 
 
 %-------------------------------------------------------------------------%
@@ -66,7 +59,7 @@ figure('Position', [100, 100, 800, 600]);
 % plotting x_t
 % there is one impulse for each 0.01 second
 
-t_x = (0:ts:length(x)*ts)';   % time vector, traspose to match x
+t_x = (0:ts:length(x)*ts)';     % time vector, traspose to match x
 x_t = [x; x(end)];              % append vector to fix discontinuity 
 
 subplot(2,1,1);
