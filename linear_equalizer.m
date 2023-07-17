@@ -20,11 +20,12 @@ x = pskmod(data,M);
 % Simple Examples 
 % h = 1;
 % h = [0.02+0.5i 0.05];
+% h = [1 0.998];            % doesn't work 
+h = [1 0.5 0.25];           % Short Decreasing Exponential Channel
 
-% Ideal Example
-t_h = (0:ts:length(x)*ts)';
-h = exp(-0.2*t_h);
-h = h(1:2);
+% Long Decreasing Exponential Channel 
+% t_h = (0:ts:length(x)*ts)';
+% h = exp(-0.2*t_h);
 
 y = conv(x,h);
 % rxSig = awgn(rxSig,30)
@@ -33,7 +34,6 @@ y = conv(x,h);
 %-------------------------------------------------------------------------%
 
 % Equalization
-% research more 
 
 lineq = comm.LinearEqualizer( ...
     NumTaps=8, ...
@@ -41,14 +41,13 @@ lineq = comm.LinearEqualizer( ...
     Constellation=complex([-1 1]), ...
     ReferenceTap=4);
 
-[z,err] = lineq(y,x(1:numTrainingSymbols)); 
+[z,err] = lineq(y,x(1:numTrainingSymbols)); % LMS
+% [z,err] = lineq(y); % CMA
 
 
 %-------------------------------------------------------------------------%
 
 % Constellation Diagram 
-% okay for now 
-
 
 constdiag = comm.ConstellationDiagram( ...
     NumInputPorts=2, ...
