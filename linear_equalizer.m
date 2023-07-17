@@ -18,8 +18,9 @@ data = randi([0 1],numSymbols,1);
 % Input Signal 
 x = pskmod(data,M);
 
-% Short Decreasing Exponential Channel 
-h = [1 0.5 0.25];           
+% Decreasing Exponential Channel
+t_h = (0:1:1000)';
+h = 0.5.^t_h;
 
 % Output Signal 
 y = conv(x,h);
