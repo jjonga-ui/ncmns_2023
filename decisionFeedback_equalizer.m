@@ -5,21 +5,24 @@ clc
 
 % Parameters 
 ts = 0.01;
-numSymbols = 100;
-numTrainingSymbols = 20;
+numSymbols = 1000;
+numTrainingSymbols = 200;
 
 
 %-------------------------------------------------------------------------%
 
 % Modulation 
+M = 2;  % BPSK
+data = randi([0 1],numSymbols,1);
 
-bpsk = comm.BPSKModulator;
+% Input Signal 
+x = pskmod(data,M);
 
-x = bpsk(randi([0 1],numSymbols,1));
+% Decreasing Exponential Channel
+t_h = (0:1:1000)';
+h = 0.5.^t_h;
 
-t_h = (0:ts:length(x)*ts)';
-h = exp(-0.2*t_h);
-
+% Output Signal 
 y = conv(x,h);
 
 
@@ -27,32 +30,29 @@ y = conv(x,h);
 
 
 % Equalization
-% research more 
 % https://www.mathworks.com/help/comm/ref/comm.decisionfeedbackequalizer-system-object.html#mw_ee65a6e9-38d3-4fea-b902-ba1250b24985
 
 dfeq = comm.DecisionFeedbackEqualizer( ...
     'Algorithm','LMS', ...
     'NumForwardTaps',4, ...
     'NumFeedbackTaps',3, ...
-    'StepSize',0.01);
+    'StepSize',0.1);
 
 %dfeq_lms.ReferenceTap = 3;
 
-z = dfeq(y,x(1:numTrainingSymbols)); 
+[z,err] = dfeq(y,x(1:numTrainingSymbols)); 
 
 
 %-------------------------------------------------------------------------%
 
 % Constellation Diagram 
-% okay for now 
-
 
 constdiag = comm.ConstellationDiagram( ...
     NumInputPorts=2, ...
     ChannelNames={'Before equalization','After equalization'}, ...
-    ReferenceConstellation=bpsk([0; 1]));
+    ReferenceConstellation=pskmod([0 M-1],M));
 
-constdiag(y,z)
+constdiag(y(numSymbols/2:end),z(numSymbols/2:end));
 
 
 %-------------------------------------------------------------------------%
@@ -65,7 +65,7 @@ figure('Position', [100, 100, 800, 600]);
 % plotting x_t
 % there is one impulse for each 0.01 second
 
-t_x = (0:ts:length(x)*ts)';   % time vector, traspose to match x
+t_x = (0:ts:length(x)*ts)';     % time vector, traspose to match x
 x_t = [x; x(end)];              % append vector to fix discontinuity 
 
 subplot(2,1,1);
@@ -89,6 +89,17 @@ ylim([-5 5]);
 xlabel('Time');
 ylabel('Amplitude');
 title('Input Signal');
+
+
+%-------------------------------------------------------------------------%
+
+% Plotting error
+
+figure
+plot(abs(err))
+title('Error Estimate')
+xlabel('Bits')
+ylabel('Amplitude (V)')
 
 
 %-------------------------------------------------------------------------%
