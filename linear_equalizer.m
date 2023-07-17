@@ -65,7 +65,7 @@ x_t = [x; x(end)];              % append vector to fix discontinuity
 
 subplot(2,1,1);
 stairs(t_x,x_t);           
-ylim([-5 5]); 
+ylim([-2 2]); 
 xlabel('Time');
 ylabel('Amplitude');
 title('Input Signal');
@@ -80,7 +80,7 @@ z_t = [z; z(end)];
 
 subplot(2,1,2);
 stairs(t_z,z_t);           
-ylim([-5 5]); 
+ylim([-2 2]); 
 xlabel('Time');
 ylabel('Amplitude');
 title('Input Signal');
