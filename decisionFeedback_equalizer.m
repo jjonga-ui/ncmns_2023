@@ -5,8 +5,8 @@ clc
 
 % Parameters 
 ts = 0.01;
-numSymbols = 100;
-numTrainingSymbols = 20;
+numSymbols = 5000;
+numTrainingSymbols = 200;
 
 
 %-------------------------------------------------------------------------%
@@ -19,9 +19,8 @@ data = randi([0 1],numSymbols,1);
 x = pskmod(data,M);
 
 % Decreasing Exponential Channel
-% t_h = (0:1:1000)';
-% h = 0.5.^t_h;
-h = 1;
+t_h = (0:1:numSymbols)';
+h = 0.5.^t_h;
 
 % Output Signal 
 y = conv(x,h);
@@ -54,7 +53,9 @@ constdiag = comm.ConstellationDiagram( ...
     'ChannelNames',{'Before equalization','After equalization'}, ...
     'ReferenceConstellation',pskmod([0 M-1],M));
 
-constdiag(y(numSymbols/2:end),z(numSymbols/2:end));
+constdiag(y(numTrainingSymbols:numSymbols/2),z(numTrainingSymbols:numSymbols/2));
+% Only half the data points of y and z are plotted (minus the training
+% symbols)
 
 
 %-------------------------------------------------------------------------%
@@ -90,7 +91,7 @@ stairs(t_z,z_t);
 ylim([-2 2]); 
 xlabel('Time');
 ylabel('Amplitude');
-title('Input Signal');
+title('Equalized Signal');
 
 
 %-------------------------------------------------------------------------%
