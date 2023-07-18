@@ -5,8 +5,8 @@ clc
 
 % Parameters 
 ts = 0.01;
-numSymbols = 1000;
-numTrainingSymbols = 200;
+numSymbols = 100;
+numTrainingSymbols = 20;
 
 
 %-------------------------------------------------------------------------%
@@ -19,7 +19,7 @@ data = randi([0 1],numSymbols,1);
 x = pskmod(data,M);
 
 % Decreasing Exponential Channel
-t_h = (0:1:1000)';
+t_h = (0:1:3)';
 h = 0.5.^t_h;
 
 % Output Signal 
@@ -31,10 +31,10 @@ y = conv(x,h);
 % Equalization
 
 lineq = comm.LinearEqualizer( ...
-    NumTaps=8, ...
-    StepSize=0.1, ...
-    Constellation=complex([-1 1]), ...
-    ReferenceTap=4);
+    'NumTaps',8, ...
+    'StepSize',0.1, ...
+    'Constellation',complex([-1 1]), ...
+    'ReferenceTap',4);
 
 [z,err] = lineq(y,x(1:numTrainingSymbols)); % LMS
 
@@ -44,9 +44,9 @@ lineq = comm.LinearEqualizer( ...
 % Constellation Diagram 
 
 constdiag = comm.ConstellationDiagram( ...
-    NumInputPorts=2, ...
-    ChannelNames={'Before equalization','After equalization'}, ...
-    ReferenceConstellation=pskmod([0 M-1],M));
+    'NumInputPorts',2, ...
+    'ChannelNames',{'Before equalization','After equalization'}, ...
+    'ReferenceConstellation',pskmod([0 M-1],M));
 
 constdiag(y(numSymbols/2:end),z(numSymbols/2:end));
 
