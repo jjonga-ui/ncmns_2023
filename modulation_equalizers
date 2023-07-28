@@ -28,12 +28,18 @@ title(['C_n BPSK signal'])
 % (c_n graph). This portion turns this into a passband signal by convolving
 % with the cosine carrier wave.
 
+figure('Position',[700 700 1200,1200])
+subplot(3,1,1)
+s = stem(x,'filled');
+title('C_n BPSK signal')
 amp = 1;
 t = 1;
+subplot(3,1,2)
 carrierWave = amp.*cos(2*pi*1*t);
+title('Cosine Carrier Wave')
 pbSignal = conv(x,carrierWave);
-% plot(x, real(x), 'b', x, imag(x), 'r')
-plot(pbSignal)
+subplot(3,1,3)
+plot(x, real(x), 'b', x, imag(x), 'r')
 plot(pbSignal, real(pbSignal), 'b', pbSignal, imag(pbSignal), 'r')
 title('Passband Signal')
 
