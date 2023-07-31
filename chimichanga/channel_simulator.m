@@ -382,11 +382,13 @@ save([file_name, '.mat'], 'hmat', 'dt', 'df')
 
 %% save figures and matrices to personal files
 
-% choose your own file path 
-file_path = "/Users/graceflores/Documents/MATLAB/ncmns_git/chimichanga/results/";
+% choose your own path to a results folder
+results_folder = "/Users/graceflores/Documents/MATLAB/ncmns_git/chimichanga/results/";
 
 
+% save figures
 changed_parameter = name_changed_parameter(h0, ht0, hr0, d0, k, Sp);
-save_figure(figure(1), "figure3", changed_parameter, file_path)
-save_figure(figure(2), "figure4", changed_parameter, file_path)
-save_figure(figure(3), "figure5", changed_parameter, file_path)
+folder_path = results_folder + changed_parameter;
+save_figure(figure(1), "figure3", folder_path)
+save_figure(figure(2), "figure4", folder_path)
+save_figure(figure(3), "figure5", folder_path)

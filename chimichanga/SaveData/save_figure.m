@@ -1,6 +1,12 @@
-function save_figure(data, figure_name, changed_parameter, file_path)
+function save_figure(data, figure_name, folder_path)
 
-file_path = file_path + changed_parameter + "_" + figure_name;
+if ~exist(folder_path, 'dir')
+    % If the folder does not exist, create it
+    mkdir(folder_path);
+end
+
+
+file_path = folder_path + "\" + figure_name;
 saveas(data, file_path, "png");
     
 end
