@@ -255,3 +255,18 @@ text(.02*d0, ht0, 'TX'), text(1.02*d0, hr0, 'RX'),
 title('Nominal channel geometry')
 
 
+%% save figures and data to personal files 
+
+% choose your own file path 
+file_path = "/Users/graceflores/Documents/MATLAB/ncmns_git/chimichanga/results/";
+
+
+% save figures 
+changed_parameter = name_changed_parameter(h0, ht0, hr0, d0, k, Sp);
+save_figure(figure(1), "figure1", changed_parameter, file_path)
+save_figure(figure(2), "figure2", changed_parameter, file_path)
+
+
+%% run channel_simulator 
+
+run("channel_simulator.m")
