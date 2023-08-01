@@ -58,8 +58,8 @@ file_name= 'example_channel';
 %% Deterministic channel geometry:
 
 h0=100; % surface height (depth) [m]
-ht0=50; % TX height [m]
-hr0=50; % RX height [m]
+ht0=60; % TX height [m]
+hr0=60; % RX height [m]
 d0=1000; % channel distance [m]
 
 k=1.7; % spreading factor
@@ -268,10 +268,10 @@ folder_path = results_folder + changed_parameter;
 save_figure(figure(1), "figure1", folder_path)
 save_figure(figure(2), "figure2", folder_path)
 
-% save parameters (still working on this)
-% save_parameters(h0,ht0,d0,k,Sp,"parameters",folder_path)
+% save parameters 
+save_parameters(h0,ht0,d0,k,Sp,"parameters",folder_path)
 
 
 %% run channel_simulator 
 
-%run("channel_simulator.m")
+% run("channel_simulator.m")

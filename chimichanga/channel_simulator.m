@@ -397,5 +397,5 @@ save_figure(figure(3), "figure5", folder_path)
 % save data to folder 
 save_data(hmat, dt, df,"channel_data",folder_path)
 
-% save parameters (still working on this)
-% save_parameters(h0,ht0,d0,k,Sp,"parameters",folder_path)
+% save parameters 
+save_parameters(h0,ht0,d0,k,Sp,"parameters",folder_path)
