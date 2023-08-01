@@ -260,14 +260,18 @@ title('Nominal channel geometry')
 % choose your own path to a results folder
 results_folder = "/Users/graceflores/Documents/MATLAB/ncmns_git/chimichanga/results/";
 
-
-% save figures 
+% create specific folder for each run 
 changed_parameter = name_changed_parameter(h0, ht0, hr0, d0, k, Sp);
 folder_path = results_folder + changed_parameter;
+
+% save figures 
 save_figure(figure(1), "figure1", folder_path)
 save_figure(figure(2), "figure2", folder_path)
+
+% save parameters (still working on this)
+% save_parameters(h0,ht0,d0,k,Sp,"parameters",folder_path)
 
 
 %% run channel_simulator 
 
-run("channel_simulator.m")
+%run("channel_simulator.m")
