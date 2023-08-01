@@ -380,11 +380,10 @@ xlabel('time [s]'), ylabel('instantaneous channel gain [dB]')
 
 save([file_name, '.mat'], 'hmat', 'dt', 'df')
 
-%% save figures and matrices to personal files
+%% save figures and data to personal files
 
 % choose your own path to a results folder
 results_folder = "/Users/graceflores/Documents/MATLAB/ncmns_git/chimichanga/results/";
-
 
 % save figures
 changed_parameter = name_changed_parameter(h0, ht0, hr0, d0, k, Sp);
@@ -392,3 +391,9 @@ folder_path = results_folder + changed_parameter;
 save_figure(figure(1), "figure3", folder_path)
 save_figure(figure(2), "figure4", folder_path)
 save_figure(figure(3), "figure5", folder_path)
+
+% save data
+save_data(hmat,"channel_data",folder_path)
+
+% save parameters
+save_parameters(h0,ht0,d0,k,Sp,"parameters.txt",folder_path)

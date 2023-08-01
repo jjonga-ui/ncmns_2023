@@ -58,7 +58,7 @@ file_name= 'example_channel';
 %% Deterministic channel geometry:
 
 h0=100; % surface height (depth) [m]
-ht0=20; % TX height [m]
+ht0=50; % TX height [m]
 hr0=50; % RX height [m]
 d0=1000; % channel distance [m]
 
@@ -70,7 +70,7 @@ cut=20; % do not consider arrivals whose strength is below that of direct arriva
 fmin=10e3; % minimum frequency [Hz]
 B=10e3; % bandwidth [Hz]
 
-df= 25; % frequency resolution [Hz], f_vec=fmin:df:fmax; 
+df=30; % frequency resolution [Hz], f_vec=fmin:df:fmax; 
 
 dt= 50e-3; % time resolution [seconds] 
 T_SS=60; % coherence time of the small-scale variations [seconds]

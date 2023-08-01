@@ -1,4 +1,4 @@
-function save_figure(figure, file_name, folder_path)
+function save_data(data, file_name, folder_path)
 
 if ~exist(folder_path, 'dir')
     % If the folder does not exist, create it
@@ -7,6 +7,6 @@ end
 
 
 file_path = folder_path + "/" + file_name;
-saveas(figure, file_path, "png");
+save(file_path,'data','-mat');
     
 end
