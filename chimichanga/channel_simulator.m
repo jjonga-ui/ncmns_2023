@@ -391,11 +391,11 @@ folder_path = results_folder + changed_parameter;
 
 % save figures to folder  
 save_figure(figure(1), "figure3", folder_path)
-save_figure(figure(2), "figure4", folder_path)
-save_figure(figure(3), "figure5", folder_path)
+save_figure(figure(2), "channel_model", folder_path)
+save_figure(figure(3), "figure4", folder_path)
 
 % save data to folder 
 save_data(hmat, dt, df,"channel_data",folder_path)
 
 % save parameters 
-save_parameters(h0,ht0,d0,k,Sp,"parameters",folder_path)
+% save_parameters(h0,ht0,d0,k,Sp,"parameters",folder_path)
