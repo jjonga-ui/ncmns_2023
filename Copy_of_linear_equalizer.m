@@ -5,17 +5,23 @@ clc
 
 % Parameters 
 ts = 0.01;
-numSymbols = 5000;
-numTrainingSymbols = 200;
+numSymbols = 10000;
+numTrainingSymbols = 1000;
 
 
 %-------------------------------------------------------------------------%
 
 % Modulation 
 
-M = 2;  % BPSK
-data = randi([0 1],numSymbols,1);
-x = pskmod(data,M);
+% M = 2;  % BPSK
+% data = randi([0 1],numSymbols,1);
+% x = pskmod(data,M);
+
+M = 4;
+data = randi([0 M-1],numSymbols,1);
+x = pskmod(data,M,pi/4);
+
+
 
 %-------------------------------------------------------------------------%
 
@@ -28,12 +34,12 @@ x = pskmod(data,M);
 % h = exp(-0.2*t_h);
 % h = h(1:2);
 
-% Decreasing Exponential Example
-t_h = (0:1:numSymbols)';
-h = 0.5.^t_h;
+% % Decreasing Exponential Example
+% t_h = (0:1:numSymbols)';
+% h = 0.5.^t_h;
 
-% % Simple Example
-% h = [1 0.5 0.25];
+% Simple Example
+h = [1 0.5 0.25];
 
 % % Complex Example
 % h = cos(0:1:100);
@@ -46,9 +52,9 @@ y = conv(x,h);
 
 % Equalization
 % research more 
-
+% 
 lineq = comm.LinearEqualizer( ...
-    NumTaps=8, ...
+    NumTaps=10, ...
     StepSize=0.1, ...
     Constellation=complex([-1 1]), ...
     ReferenceTap=4);
@@ -56,7 +62,7 @@ lineq = comm.LinearEqualizer( ...
 [z,err] = lineq(y,x(1:numTrainingSymbols)); 
 %[z,err] = lineq(y,x); 
 
-% dfeq = comm.DecisionFeedbackEqualizer('Algorithm','LMS','NumForwardTaps',4,'NumFeedbackTaps',3,'StepSize',0.01,'Constellation',complex([-1 1]));
+% dfeq = comm.DecisionFeedbackEqualizer('Algorithm','LMS','NumForwardTaps',4000,'NumFeedbackTaps',2000,'StepSize',0.01,'Constellation',complex([-1 1]));
 % z = dfeq(y,x);
 
 %-------------------------------------------------------------------------%
@@ -106,7 +112,7 @@ stairs(t_z,z_t);
 ylim([-5 5]); 
 xlabel('Time');
 ylabel('Amplitude');
-title('Input Signal');
+title('Output Signal');
 
 
 %-------------------------------------------------------------------------%
