@@ -67,7 +67,7 @@ file_name= 'example_channel';
 
 %% Deterministic channel geometry:
 
-h0=90; % surface height (depth) [m]
+h0=80; % surface height (depth) [m]
 ht0=75; % TX height [m]
 hr0=75; % RX height [m]
 d0=1000; % channel distance [m]
