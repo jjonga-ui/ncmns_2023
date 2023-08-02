@@ -55,11 +55,21 @@ clc, clear all, close all, format long;
 %% Data file name: 
 file_name= 'example_channel';
 
+
+%% DEFAULT PARAMETERS
+
+% h0=100; % surface height (depth) [m]
+% ht0=75; % TX height [m]
+% hr0=75; % RX height [m]
+% d0=1000; % channel distance [m]
+% k=1.7; % spreading factor
+% Sp= 20; % number of intra-paths (assumed constant for all paths)
+
 %% Deterministic channel geometry:
 
-h0=100; % surface height (depth) [m]
-ht0=60; % TX height [m]
-hr0=60; % RX height [m]
+h0=90; % surface height (depth) [m]
+ht0=75; % TX height [m]
+hr0=75; % RX height [m]
 d0=1000; % channel distance [m]
 
 k=1.7; % spreading factor
@@ -274,4 +284,4 @@ save_parameters(h0,ht0,d0,k,Sp,"parameters",folder_path)
 
 %% run channel_simulator 
 
-% run("channel_simulator.m")
+run("channel_simulator.m")
