@@ -1,4 +1,4 @@
-% DEFAULT PARAMETERS FROM INITIAL DOWNLOAD
+% DEFAULT PARAMETERS FROM INITIAL DOWNLOAD (kind of)
 
 % h0=100; % surface height (depth) [m]
 % ht0=75; % TX height [m]
@@ -16,7 +16,7 @@ count = 0;
         changed_parameter = "h0_" + h0;
         count = count + 1;
     end
-    if (ht0&hr0)~=75
+    if (ht0~=75) && (hr0~=75)
         if ht0~=hr0
             count = count + 1;
         end
