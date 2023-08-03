@@ -212,14 +212,13 @@ ylabel('Amplitude (V)')
 % save figures and data to personal files 
 
 % choose your own path to a results folder
-% results_folder = "/Users/graceflores/Documents/MATLAB/ncmns_git/chimichanga/results/";
-% 
-% create specific folder for each run 
-% changed_parameter = name_changed_parameter(h0, ht0, hr0, d0, k, Sp);
-% folder_path = results_folder + changed_parameter;
-% 
+results_folder = "/Users/graceflores/Documents/MATLAB/ncmns_git/chimichanga/results/";
+
+% folder of specific channel run 
+folder_path = results_folder + channel_run_name;
+
 % save figures 
-% save_figure(figure(1), "figure1", folder_path)
-% save_figure(figure(2), "error_estimate", folder_path)
+save_figure(figure(1), "continuous_time_plotting", folder_path)
+save_figure(figure(2), "error_estimate", folder_path)
 
 
