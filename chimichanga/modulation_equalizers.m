@@ -55,7 +55,12 @@ x = pskmod(data,M);
 file_path = "/Users/graceflores/Documents/MATLAB/ncmns_git/chimichanga/results/" + channel_run_name + "/channel_data";
 channel_data = importdata(file_path);
 
-% Channel Model
+% Simple Channel Model
+t_h = (0:1:numSymbols)';
+h = 0.5.^t_h;  
+
+
+% ComplexChannel Model
 % h = channel_data.hmat(:,1);
 
 
