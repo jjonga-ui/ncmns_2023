@@ -29,7 +29,7 @@ x = pskmod(data,M);
 t_h = (0:1:numSymbols)';
 
 % Decreasing Exponential Channel (not giving expected results)
-% h = 0.5.^t_h;             % works
+h = 0.5.^t_h;             % works
 % h = 0.6.^t_h;             % works
 % h = exp(-0.5.*t_h);       % works, but going any lower causes problems
 
@@ -37,7 +37,7 @@ t_h = (0:1:numSymbols)';
 % h = [1; 0.8187];
 % h = cos(2*pi * t_h + pi/2);
 % h = [0.0625 0.125 0.25 0.5];      % "leading echos only"
-h = [0.5 0.25 0.125 0.0625];      % "trailing echos only"
+% h = [0.5 0.25 0.125 0.0625];      % "trailing echos only"
 
 %-------------------------------------------------------------------------%
 

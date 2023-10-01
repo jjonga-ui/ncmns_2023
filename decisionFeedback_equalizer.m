@@ -5,7 +5,7 @@ clc
 
 % Parameters 
 ts = 0.01;
-numSymbols = 5000;
+numSymbols = 1000;
 numTrainingSymbols = 200;
 
 
@@ -18,9 +18,17 @@ data = randi([0 1],numSymbols,1);
 % Input Signal 
 x = pskmod(data,M);
 
-% Decreasing Exponential Channel
+% Decreasing Exponential Channel (not giving expected results)
+% t_h = (0:1:numSymbols)';
+% h = 0.5.^t_h;             % works
+% h = 0.6.^t_h;             % works
+% h = exp(-0.5.*t_h);       % works, but going any lower causes problems
+
+% Other Example Channels (expected results)
 t_h = (0:1:numSymbols)';
-h = 0.5.^t_h;
+h = exp(-0.2*t_h);
+h = h(1:2);
+
 
 % Output Signal 
 y = conv(x,h);
@@ -38,8 +46,6 @@ dfeq = comm.DecisionFeedbackEqualizer( ...
     'NumFeedbackTaps',3, ...
     'StepSize',0.1, ...
     'Constellation',complex([-1 1]));
-
-%dfeq_lms.ReferenceTap = 3;
 
 [z,err] = dfeq(y,x(1:numTrainingSymbols)); 
 
