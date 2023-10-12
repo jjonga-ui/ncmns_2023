@@ -380,22 +380,23 @@ xlabel('time [s]'), ylabel('instantaneous channel gain [dB]')
 
 % save([file_name, '.mat'], 'hmat', 'dt', 'df', '-mat')
 
+
 %% save figures and data to personal files
 
-% choose your own path to a results folder
-results_folder = "/Users/graceflores/Documents/MATLAB/ncmns_git/chimichanga/results/";
-
-% create specific folder for each run 
-changed_parameter = name_changed_parameter(h0, ht0, hr0, d0, k, Sp);
-folder_path = results_folder + changed_parameter;
-
-% save figures to folder  
-save_figure(figure(1), "figure3", folder_path)
-save_figure(figure(2), "channel_model", folder_path)
-save_figure(figure(3), "figure4", folder_path)
-
-% save data to folder 
-save_data(hmat, dt, df,"channel_data",folder_path)
-
-% save parameters 
-% save_parameters(h0,ht0,d0,k,Sp,"parameters",folder_path)
+% % choose your own path to a results folder
+% results_folder = "/Users/graceflores/Documents/MATLAB/ncmns_git/chimichanga/results/";
+% 
+% % create specific folder for each run 
+% changed_parameter = name_changed_parameter(h0, ht0, hr0, d0, k, Sp);
+% folder_path = results_folder + changed_parameter;
+% 
+% % save figures to folder  
+% save_figure(figure(1), "figure3", folder_path)
+% save_figure(figure(2), "channel_model", folder_path)
+% save_figure(figure(3), "figure4", folder_path)
+% 
+% % save data to folder 
+% save_data(hmat, dt, df,"channel_data",folder_path)
+% 
+% % save parameters 
+% % save_parameters(h0,ht0,d0,k,Sp,"parameters",folder_path)

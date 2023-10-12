@@ -113,7 +113,7 @@ a_AR= .9; % AR parameter for generating L-S variations (constant for variables h
 % 2)'sim_seq': SIMplified L-S model & Statistically EQuivalent S-S model
 % 3)'bel_dir': BELlhop L-S model & DIRect S-S model
 % 4)'bel_seq': BELlhop L-S model & Statistically EQuivalent S-S model
-method='sim_dir'; 
+method='bel_dir'; 
 
 %% Doppler: 
 % All parameters can be entered as scalars or vectors of size(t_tot_vec).
