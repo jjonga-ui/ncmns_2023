@@ -384,7 +384,7 @@ xlabel('time [s]'), ylabel('instantaneous channel gain [dB]')
 %% save figures and data to personal files
 
 % choose your own path to a results folder
-results_folder = "/Users/graceflores/Documents/MATLAB/ncmns_git/chimichanga/results/";
+results_folder = "C:\Users\spddi\Documents\MATLAB\ResearchFall2023\Grace's channel_equalizer simulation\Results";
 
 % create specific folder for each run 
 changed_parameter = name_changed_parameter(h0, ht0, hr0, d0, k, Sp);

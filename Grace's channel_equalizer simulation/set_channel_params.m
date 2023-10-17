@@ -67,9 +67,9 @@ file_name= 'example_channel';
 
 %% Deterministic channel geometry:
 
-h0=120; % surface height (depth) [m]
-ht0=75; % TX height [m]
-hr0=75; % RX height [m]
+h0=100; % surface height (depth) [m]
+ht0=60; % TX height [m]
+hr0=60; % RX height [m]
 d0=1000; % channel distance [m]
 
 k=1.7; % spreading factor
@@ -268,7 +268,7 @@ title('Nominal channel geometry')
 %% save figures and data to personal files 
 
 % choose your own path to a results folder
-results_folder = "/Users/graceflores/Documents/MATLAB/ncmns_git/chimichanga/results/";
+results_folder = "C:\Users\spddi\Documents\MATLAB\ResearchFall2023\Grace's channel_equalizer simulation\Results";
 
 % create specific folder for each run 
 changed_parameter = name_changed_parameter(h0, ht0, hr0, d0, k, Sp);
