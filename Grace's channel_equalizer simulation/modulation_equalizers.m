@@ -52,8 +52,8 @@ x = pskmod(data,M);
 
 
 % Importing Channel Data
-file_path = "/Users/graceflores/Documents/MATLAB/ncmns_git/chimichanga/results/" + channel_run_name + "/channel_data";
-channel_data = importdata(file_path);
+%file_path = "C:\Users\spddi\Documents\MATLAB\ResearchFall2023\Grace's channel_equalizer simulation\Results" + channel_run_name + "/channel_data";
+%channel_data = importdata(file_path);
 
 % Simple Channel Model
 t_h = (0:1:numSymbols)';
@@ -215,14 +215,14 @@ ylabel('Error Magnitude','FontSize',20)
 
 %--------------------------------------------------------------------------
 
-% save figures and data to personal files 
-
-% choose your own path to a results folder
-results_folder = "/Users/graceflores/Documents/MATLAB/ncmns_git/chimichanga/results/";
-
-% folder of specific channel run 
-folder_path = results_folder + channel_run_name;
-
-% save figures 
-save_figure(figure(1), "continuous_time_plotting", folder_path)
-save_figure(figure(2), "error_estimate", folder_path)
+% % save figures and data to personal files 
+% 
+% % choose your own path to a results folder
+% results_folder = "C:\Users\spddi\Documents\MATLAB\ResearchFall2023\Grace's channel_equalizer simulation\Results";
+% 
+% % folder of specific channel run 
+% folder_path = results_folder + channel_run_name;
+% 
+% % save figures 
+% save_figure(figure(1), "continuous_time_plotting", folder_path)
+% save_figure(figure(2), "error_estimate", folder_path)
