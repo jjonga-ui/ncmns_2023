@@ -1,0 +1,14 @@
+close all;
+clear all;
+
+% Data Generation
+I1 = rand( 512, 512 );
+I2 = rand( 512, 512 );
+
+% Visualization
+figure;
+axis image;
+colormap gray;
+colorbar;
+
+subplot()

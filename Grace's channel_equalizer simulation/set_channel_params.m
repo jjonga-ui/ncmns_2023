@@ -113,7 +113,7 @@ a_AR= .9; % AR parameter for generating L-S variations (constant for variables h
 % 2)'sim_seq': SIMplified L-S model & Statistically EQuivalent S-S model
 % 3)'bel_dir': BELlhop L-S model & DIRect S-S model
 % 4)'bel_seq': BELlhop L-S model & Statistically EQuivalent S-S model
-method='sim_dir'; 
+method='bel_dir'; 
 
 %% Doppler: 
 % All parameters can be entered as scalars or vectors of size(t_tot_vec).
@@ -263,25 +263,3 @@ axis([-.1*d0, 1.1*d0, -.1*h0, 1.1*h0]),
 xlabel('range [m]'), ylabel('height above bottom [m]'),
 text(.02*d0, ht0, 'TX'), text(1.02*d0, hr0, 'RX'), 
 title('Nominal channel geometry')
-
-
-%% save figures and data to personal files 
-
-% choose your own path to a results folder
-results_folder = "/Users/graceflores/Documents/MATLAB/ncmns_git/chimichanga/results/";
-
-% create specific folder for each run 
-changed_parameter = name_changed_parameter(h0, ht0, hr0, d0, k, Sp);
-folder_path = results_folder + changed_parameter;
-
-% save figures 
-save_figure(figure(1), "figure1", folder_path)
-save_figure(figure(2), "figure2", folder_path)
-
-% save parameters 
-save_parameters(h0,ht0,d0,k,Sp,"parameters",folder_path)
-
-
-%% run channel_simulator 
-
-run("channel_simulator.m")
